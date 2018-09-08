@@ -18,6 +18,8 @@ them to the `MLPipeline` class:
 
 .. ipython:: python
 
+    import os
+    os.getcwd()
     from mlblocks import MLPipeline
     primitives = [
         'sklearn.preprocessing.StandardScaler',
