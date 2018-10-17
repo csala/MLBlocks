@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; MLBlocks 0.2.1-dev documentation</title>
+  <title>Index &mdash; MLBlocks 0.2.4-dev documentation</title>
   
 
   
@@ -128,9 +128,51 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">References</span></p>
+<p class="caption"><span class="caption-text">Pipeline Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/tabular.html">Tabular Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/tabular.html#regression-pipeline">Regression Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/tabular.html#classification-pipeline">Classification Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/text.html">Text Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/text.html#text-classification">Text Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pipeline_examples/text.html#mlprimitives-keras-preprocessing-keras-lstm">MLPrimitives + Keras Preprocessing + Keras LSTM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/text.html#tabular-data-with-text">Tabular Data with Text</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pipeline_examples/text.html#mlprimitives-scikit-learn-randomforestclassifier">MLPrimitives + Scikit-learn RandomForestClassifier</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/image.html">Image Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/image.html#image-classification">Image Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pipeline_examples/image.html#opencv-gaussianblur-scikit-image-hog-scikit-learn-randomforestclassifier">OpenCV GaussianBlur + Scikit-image HOG + Scikit-Learn RandomForestClassifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/image.html#opencv-gaussianblur-keras-single-layer-cnn">OpenCV GaussianBlur + Keras Single Layer CNN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/image.html#image-regression">Image Regression</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pipeline_examples/image.html#keras-mobilenet-xgbregressor">Keras MobileNet + XGBRegressor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/graph.html">Graph Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/graph.html#link-prediction">Link Prediction</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pipeline_examples/graph.html#networkx-mlprimitives-scikit-learn-xgboost">NetworkX + MLPrimitives + Scikit-learn + XGBoost</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/mlblocks.html">mlblocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mlblocks.datasets.html">mlblocks.datasets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Resources</span></p>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="authors.html">Credits</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
@@ -206,6 +248,7 @@
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
  | <a href="#B"><strong>B</strong></a>
+ | <a href="#D"><strong>D</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
  | <a href="#I"><strong>I</strong></a>
@@ -215,12 +258,13 @@
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
  | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
  
 </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.add_primitives_path">add_primitives_path() (in module mlblocks)</a>
+      <li><a href="api/mlblocks.html#mlblocks.add_primitives_path">add_primitives_path() (in module mlblocks)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -228,7 +272,23 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLPipeline.blocks">blocks (mlblocks.MLPipeline attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.blocks">blocks (mlblocks.MLPipeline attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.data">data (mlblocks.datasets.Dataset attribute)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset">Dataset (class in mlblocks.datasets)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.describe">describe() (mlblocks.datasets.Dataset method)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.description">description (mlblocks.datasets.Dataset attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -236,17 +296,19 @@
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock.fit">fit() (mlblocks.MLBlock method)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.fit">fit() (mlblocks.MLBlock method)</a>
 
       <ul>
-        <li><a href="api_reference.html#mlblocks.MLPipeline.fit">(mlblocks.MLPipeline method)</a>
+        <li><a href="api/mlblocks.html#mlblocks.MLPipeline.fit">(mlblocks.MLPipeline method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock.fit_args">fit_args (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.fit_args">fit_args (mlblocks.MLBlock attribute)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLBlock.fit_method">fit_method (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.fit_method">fit_method (mlblocks.MLBlock attribute)</a>
+</li>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.from_dict">from_dict() (mlblocks.MLPipeline class method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -254,20 +316,22 @@
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock.get_hyperparameters">get_hyperparameters() (mlblocks.MLBlock method)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.get_hyperparameters">get_hyperparameters() (mlblocks.MLBlock method)</a>
 
       <ul>
-        <li><a href="api_reference.html#mlblocks.MLPipeline.get_hyperparameters">(mlblocks.MLPipeline method)</a>
+        <li><a href="api/mlblocks.html#mlblocks.MLPipeline.get_hyperparameters">(mlblocks.MLPipeline method)</a>
 </li>
       </ul></li>
+      <li><a href="api/mlblocks.html#mlblocks.get_primitives_paths">get_primitives_paths() (in module mlblocks)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.get_primitives_paths">get_primitives_paths() (in module mlblocks)</a>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.get_splits">get_splits() (mlblocks.datasets.Dataset method)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLBlock.get_tunable_hyperparameters">get_tunable_hyperparameters() (mlblocks.MLBlock method)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.get_tunable_hyperparameters">get_tunable_hyperparameters() (mlblocks.MLBlock method)</a>
 
       <ul>
-        <li><a href="api_reference.html#mlblocks.MLPipeline.get_tunable_hyperparameters">(mlblocks.MLPipeline method)</a>
+        <li><a href="api/mlblocks.html#mlblocks.MLPipeline.get_tunable_hyperparameters">(mlblocks.MLPipeline method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -276,7 +340,11 @@
 <h2 id="I">I</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLPipeline.input_names">input_names (mlblocks.MLPipeline attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.init_params">init_params (mlblocks.MLPipeline attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.input_names">input_names (mlblocks.MLPipeline attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -284,7 +352,33 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.load_primitive">load_primitive() (in module mlblocks)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.load">load() (mlblocks.MLPipeline class method)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_amazon">load_amazon() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_boston">load_boston() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_dic28">load_dic28() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_handgeometry">load_handgeometry() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_iris">load_iris() (in module mlblocks.datasets)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_jester">load_jester() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_newsgroups">load_newsgroups() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_nomination">load_nomination() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_personae">load_personae() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.html#mlblocks.load_primitive">load_primitive() (in module mlblocks)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_umls">load_umls() (in module mlblocks.datasets)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.load_usps">load_usps() (in module mlblocks.datasets)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -292,13 +386,15 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock">MLBlock (class in mlblocks)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock">MLBlock (class in mlblocks)</a>
+</li>
+      <li><a href="api/mlblocks.html#module-mlblocks">mlblocks (module)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#module-mlblocks">mlblocks (module)</a>
+      <li><a href="api/mlblocks.datasets.html#module-mlblocks.datasets">mlblocks.datasets (module)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLPipeline">MLPipeline (class in mlblocks)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline">MLPipeline (class in mlblocks)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -306,15 +402,19 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock.name">name (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.name">name (mlblocks.datasets.Dataset attribute)</a>
+
+      <ul>
+        <li><a href="api/mlblocks.html#mlblocks.MLBlock.name">(mlblocks.MLBlock attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="O">O</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLPipeline.output_names">output_names (mlblocks.MLPipeline attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.output_names">output_names (mlblocks.MLPipeline attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -322,19 +422,21 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLPipeline.predict">predict() (mlblocks.MLPipeline method)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.predict">predict() (mlblocks.MLPipeline method)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLBlock.primitive">primitive (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.primitive">primitive (mlblocks.MLBlock attribute)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLBlock.produce">produce() (mlblocks.MLBlock method)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.primitives">primitives (mlblocks.MLPipeline attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock.produce_args">produce_args (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.produce">produce() (mlblocks.MLBlock method)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLBlock.produce_method">produce_method (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.produce_args">produce_args (mlblocks.MLBlock attribute)</a>
 </li>
-      <li><a href="api_reference.html#mlblocks.MLBlock.produce_output">produce_output (mlblocks.MLBlock attribute)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.produce_method">produce_method (mlblocks.MLBlock attribute)</a>
+</li>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.produce_output">produce_output (mlblocks.MLBlock attribute)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -342,12 +444,30 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="api_reference.html#mlblocks.MLBlock.set_hyperparameters">set_hyperparameters() (mlblocks.MLBlock method)</a>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.save">save() (mlblocks.MLPipeline method)</a>
+</li>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.score">score() (mlblocks.datasets.Dataset method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.html#mlblocks.MLBlock.set_hyperparameters">set_hyperparameters() (mlblocks.MLBlock method)</a>
 
       <ul>
-        <li><a href="api_reference.html#mlblocks.MLPipeline.set_hyperparameters">(mlblocks.MLPipeline method)</a>
+        <li><a href="api/mlblocks.html#mlblocks.MLPipeline.set_hyperparameters">(mlblocks.MLPipeline method)</a>
 </li>
       </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.datasets.html#mlblocks.datasets.Dataset.target">target (mlblocks.datasets.Dataset attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/mlblocks.html#mlblocks.MLPipeline.to_dict">to_dict() (mlblocks.MLPipeline method)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -363,7 +483,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, MIT Data To AI Lab.
+        &copy; Copyright 2018, MIT Data To AI Lab
 
     </p>
   </div>
@@ -382,21 +502,14 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'0.2.1-dev',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
