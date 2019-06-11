@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pipelines &mdash; MLBlocks 0.2.4-dev documentation</title>
+  <title>Pipelines &mdash; MLBlocks 0.3.1-dev documentation</title>
   
 
   
@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -33,21 +40,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Adding Primitives" href="adding_primitives.html" />
     <link rel="prev" title="Hyperparameters" href="hyperparameters.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -119,6 +121,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#context-usage-examples">Context Usage Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#json-annotations">JSON Annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#representing-a-pipeline-as-a-dict">Representing a  Pipeline as a dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-pipeline-from-a-dict">Loading a Pipeline from a dict</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="adding_primitives.html">Adding Primitives</a><ul>
@@ -126,14 +133,19 @@
 <li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#writing-primitives">Writing Primitives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#primitives-lookup">Primitives Lookup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#adding-a-primitives-folder">Adding a Primitives Folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#developing-a-primitives-library">Developing a Primitives Library</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Pipeline Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/tabular.html">Tabular Pipelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/tabular.html#regression-pipeline">Regression Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/tabular.html#classification-pipeline">Classification Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/single_table.html">Single Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/single_table.html#regression-pipeline">Regression Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/single_table.html#classification-pipeline">Classification Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/multi_table.html">Multi Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/multi_table.html#multi-table-classification-pipeline">Multi Table Classification Pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/text.html">Text Pipelines</a><ul>
@@ -171,6 +183,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api/mlblocks.html">mlblocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/mlblocks.datasets.html">mlblocks.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/mlblocks.discovery.html">mlblocks.discovery</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
@@ -296,8 +309,8 @@ separated by a hash symbol <code class="docutils literal notranslate"><span clas
 within a single MLPipeline:</p>
 <div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [4]: </span><span class="nb">dict</span><span class="p">(</span><span class="n">pipeline</span><span class="o">.</span><span class="n">blocks</span><span class="p">)</span>
 <span class="gh">Out[4]: </span><span class="go"></span>
-<span class="go">{&#39;sklearn.preprocessing.StandardScaler#1&#39;: &lt;mlblocks.mlblock.MLBlock at 0x2aaf3f2d23c8&gt;,</span>
-<span class="go"> &#39;sklearn.ensemble.RandomForestClassifier#1&#39;: &lt;mlblocks.mlblock.MLBlock at 0x2aaf3816c588&gt;}</span>
+<span class="go">{&#39;sklearn.preprocessing.StandardScaler#1&#39;: &lt;mlblocks.mlblock.MLBlock at 0x2b5bbb5f09e8&gt;,</span>
+<span class="go"> &#39;sklearn.ensemble.RandomForestClassifier#1&#39;: &lt;mlblocks.mlblock.MLBlock at 0x2b5bbb96ab38&gt;}</span>
 </pre></div>
 </div>
 </div>
@@ -315,14 +328,14 @@ within a single MLPipeline:</p>
 <span class="gp">   ...: </span><span class="p">}</span>
 <span class="gp">   ...: </span>
 
-<span class="gp">In [6]: </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="p">(</span><span class="n">primitives</span><span class="p">,</span> <span class="n">init_params</span><span class="p">)</span>
+<span class="gp">In [6]: </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="p">(</span><span class="n">primitives</span><span class="p">,</span> <span class="n">init_params</span><span class="o">=</span><span class="n">init_params</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This dictionary must have as keys the name of the blocks that the arguments belong to, and
 as values the dictionary that contains the argument names and their values.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If only one block of a specific primitive exists in the pipeline, the counter
+<p class="admonition-title">Note</p>
+<p>If only one block of a specific primitive exists in the pipeline, the counter
 appended to its name can be skipped when specifying the arguments, as shown in the
 example.</p>
 </div>
@@ -336,11 +349,11 @@ methods of a pipeline is the <strong>Context dictionary</strong>.</p>
 the variables passed to the method are stored in it.</p>
 <p>Then, the following happens for each block:</p>
 <ul class="simple">
-<li>The list of arguments that the method expects is retrieved from the block configuration.</li>
-<li>The corresponding values are read from the <strong>Context</strong> and passed to the method.</li>
-<li>The list of outputs that the method returns is retrieved from the block configuration.</li>
-<li>The indicated outputs are captured in order and put back to the <strong>Context</strong> dictionary
-using the name specified.</li>
+<li><p>The list of arguments that the method expects is retrieved from the block configuration.</p></li>
+<li><p>The corresponding values are read from the <strong>Context</strong> and passed to the method.</p></li>
+<li><p>The list of outputs that the method returns is retrieved from the block configuration.</p></li>
+<li><p>The indicated outputs are captured in order and put back to the <strong>Context</strong> dictionary
+using the name specified.</p></li>
 </ul>
 <div class="section" id="context-usage-examples">
 <h3>Context Usage Examples<a class="headerlink" href="#context-usage-examples" title="Permalink to this headline">¶</a></h3>
@@ -350,15 +363,15 @@ one, which outputs the final prediction, called <cite>y</cite>.</p>
 <p>In this case, supposing that we only have 3 blocks, the sequence when the <code class="docutils literal notranslate"><span class="pre">pipeline.predict(X)</span></code>
 call is issued would be:</p>
 <ol class="arabic simple">
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is stored in the <strong>Context</strong>.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled from the <strong>Context</strong> and passed to <cite>block1</cite>.</li>
-<li>The output from <cite>block1</cite> is put back into the <strong>Context</strong>, overwriting the old value.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled again from the <strong>Context</strong> and passed to <cite>block2</cite>.</li>
-<li>The output from <cite>block2</cite> is put back into the <strong>Context</strong>, overwriting again the old value.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled for the last time from the <strong>Context</strong> and passed to <cite>block3</cite>.</li>
-<li>The output from <cite>block3</cite>, since it is the last one, is returned.</li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is stored in the <strong>Context</strong>.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled from the <strong>Context</strong> and passed to <cite>block1</cite>.</p></li>
+<li><p>The output from <cite>block1</cite> is put back into the <strong>Context</strong>, overwriting the old value.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled again from the <strong>Context</strong> and passed to <cite>block2</cite>.</p></li>
+<li><p>The output from <cite>block2</cite> is put back into the <strong>Context</strong>, overwriting again the old value.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled for the last time from the <strong>Context</strong> and passed to <cite>block3</cite>.</p></li>
+<li><p>The output from <cite>block3</cite>, since it is the last one, is returned.</p></li>
 </ol>
-<div class="graphviz"><img src="../_images/graphviz-d7c76748679956f5eb025d50582b3a6cc1b6affd.png" alt="digraph G {
+<div class="graphviz"><img src="../_images/graphviz-b3981e4480a82cc9f77d01d9337416ff795e60e5.png" alt="digraph G {
     subgraph cluster_0 {
         label = &quot;pipeline.predict(X)&quot;;
 
@@ -380,11 +393,11 @@ call is issued would be:</p>
 
     X -&gt; X1;
     X1 -&gt; b1 [constraint=false];
-    b1 -&gt; X2 [label=modified];
-    X2 -&gt; b2 [constraint=false]
-    b2 -&gt; X3 [label=modified];
-    X3 -&gt; b3 [constraint=false]
-    b3 -&gt; y
+    b1 -&gt; X2;
+    X2 -&gt; b2 [constraint=false];
+    b2 -&gt; X3;
+    X3 -&gt; b3 [constraint=false];
+    b3 -&gt; y;
 }" class="graphviz" /></div>
 <p>Another schema with some more complexity would be one where there is one primitive that
 needs to be passed an additional argument that provides information about the data.</p>
@@ -394,14 +407,14 @@ it needs to be given the list of features that it needs to encode in a variable 
 <p>In this case, the call would be <code class="docutils literal notranslate"><span class="pre">pipeline.predict(X,</span> <span class="pre">features=features)</span></code>, and the sequence
 of actions would be:</p>
 <ol class="arabic simple">
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">features</span></code> is stored in the <strong>Context</strong>.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">features</span></code> is pulled from the <strong>Context</strong> and passed to the
-<cite>encoder</cite> block.</li>
-<li>The output from <cite>encoder</cite> is put back into the <strong>Context</strong> as <code class="docutils literal notranslate"><span class="pre">X</span></code>, overwriting the old value.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled again from the <strong>Context</strong> and passed to the <cite>estimator</cite> block.</li>
-<li>The output from the <cite>estimator</cite> block is returned.</li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">features</span></code> is stored in the <strong>Context</strong>.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">features</span></code> is pulled from the <strong>Context</strong> and passed to the
+<cite>encoder</cite> block.</p></li>
+<li><p>The output from <cite>encoder</cite> is put back into the <strong>Context</strong> as <code class="docutils literal notranslate"><span class="pre">X</span></code>, overwriting the old value.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled again from the <strong>Context</strong> and passed to the <cite>estimator</cite> block.</p></li>
+<li><p>The output from the <cite>estimator</cite> block is returned.</p></li>
 </ol>
-<div class="graphviz"><img src="../_images/graphviz-f6c3f8af4e889ed42e60cea708a1803bca72ad28.png" alt="digraph G {
+<div class="graphviz"><img src="../_images/graphviz-30b772283c09a682c0839163ff176f99cc84d262.png" alt="digraph G {
     subgraph cluster_0 {
         label = &quot;pipeline.predict(X, features=features)&quot;;
 
@@ -411,9 +424,10 @@ of actions would be:</p>
         b1 -&gt; b2 [style=invis];
 
         subgraph cluster_1 {
-            X1 [label=X];
-            f1 [label=features];
-            X2 [label=X];
+            {rank=same X1 f1}
+            X1 [label=X group=c];
+            f1 [label=features group=c];
+            X2 [label=X group=c];
             f1 -&gt; X1 [style=invis];
             X1 -&gt; X2 [style=dashed];
             label = &quot;Context&quot;;
@@ -424,8 +438,9 @@ of actions would be:</p>
     {rank=same X features}
     features -&gt; f1;
     X -&gt; X1;
-    {X1 f1} -&gt; b1 [constraint=false];
-    b1 -&gt; X2 [label=encoded];
+    X1 -&gt; b1 [constraint=false];
+    f1 -&gt; b1 [constraint=false];
+    b1 -&gt; X2;
     X2 -&gt; b2 [constraint=false]
     b2 -&gt; y
 }" class="graphviz" /></div>
@@ -435,16 +450,16 @@ are categorical and want to use it instead of passing a manually crafted list of
 <p>In this case, we go back to the <code class="docutils literal notranslate"><span class="pre">pipeline.predict(X)</span></code> call, and let the <cite>detector</cite> primitive
 do its job:</p>
 <ol class="arabic simple">
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is stored in the <strong>Context</strong>.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled from the <strong>Context</strong> and passed to the <cite>detector</cite> block.</li>
-<li>The output from the <cite>detector</cite> block is stored in the <strong>Context</strong> as the <cite>features</cite> variable.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">features</span></code> is pulled from the <strong>Context</strong> and passed to the
-<cite>encoder</cite> block.</li>
-<li>The output from <cite>encoder</cite> is put back into the <strong>Context</strong> as <code class="docutils literal notranslate"><span class="pre">X</span></code>, overwriting the old value.</li>
-<li>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled again from the <strong>Context</strong> and passed to the <cite>estimator</cite> block.</li>
-<li>The output from the <cite>estimator</cite> block is returned.</li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is stored in the <strong>Context</strong>.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled from the <strong>Context</strong> and passed to the <cite>detector</cite> block.</p></li>
+<li><p>The output from the <cite>detector</cite> block is stored in the <strong>Context</strong> as the <cite>features</cite> variable.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">features</span></code> is pulled from the <strong>Context</strong> and passed to the
+<cite>encoder</cite> block.</p></li>
+<li><p>The output from <cite>encoder</cite> is put back into the <strong>Context</strong> as <code class="docutils literal notranslate"><span class="pre">X</span></code>, overwriting the old value.</p></li>
+<li><p>The value of <code class="docutils literal notranslate"><span class="pre">X</span></code> is pulled again from the <strong>Context</strong> and passed to the <cite>estimator</cite> block.</p></li>
+<li><p>The output from the <cite>estimator</cite> block is returned.</p></li>
 </ol>
-<div class="graphviz"><img src="../_images/graphviz-d41fb91f18ade9832ae510b93acae2111254e4e8.png" alt="digraph G {
+<div class="graphviz"><img src="../_images/graphviz-74f15df84efdedb1488bfe2b184fbe7cecd8355d.png" alt="digraph G {
     subgraph cluster_0 {
         label = &quot;pipeline.predict(X)&quot;;
 
@@ -455,9 +470,9 @@ do its job:</p>
         b0 -&gt; b1 -&gt; b2 [style=invis];
 
         subgraph cluster_1 {
-            X1 [label=X];
-            f1 [label=features];
-            X2 [label=X];
+            X1 [label=X group=c];
+            f1 [label=features group=c];
+            X2 [label=X group=c];
             X1 -&gt; f1 -&gt; X2 [style=invis];
             X1 -&gt; X2 [style=dashed];
             label = &quot;Context&quot;;
@@ -469,10 +484,151 @@ do its job:</p>
     X1 -&gt; b0 [constraint=false];
     b0 -&gt; f1;
     {X1 f1} -&gt; b1 [constraint=false];
-    b1 -&gt; X2 [label=encoded];
+    b1 -&gt; X2;
     X2 -&gt; b2 [constraint=false]
     b2 -&gt; y
 }" class="graphviz" /></div>
+</div>
+</div>
+<div class="section" id="json-annotations">
+<h2>JSON Annotations<a class="headerlink" href="#json-annotations" title="Permalink to this headline">¶</a></h2>
+<p>Like primitives, Pipelines can also be annotated and stored as dicts or JSON files that contain
+the different arguments expected by the <code class="docutils literal notranslate"><span class="pre">MLPipeline</span></code> class, as well as the set hyperparameters
+and tunable hyperparameters.</p>
+<div class="section" id="representing-a-pipeline-as-a-dict">
+<h3>Representing a  Pipeline as a dict<a class="headerlink" href="#representing-a-pipeline-as-a-dict" title="Permalink to this headline">¶</a></h3>
+<p>The dict representation of an Pipeline can be obtained directly from an <code class="docutils literal notranslate"><span class="pre">MLPipeline</span></code> instance,
+by calling its <code class="docutils literal notranslate"><span class="pre">to_dict</span></code> method.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [7]: </span><span class="n">pipeline</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="gh">Out[7]: </span><span class="go"></span>
+<span class="go">{&#39;primitives&#39;: [&#39;sklearn.preprocessing.StandardScaler&#39;,</span>
+<span class="go">  &#39;sklearn.ensemble.RandomForestClassifier&#39;],</span>
+<span class="go"> &#39;init_params&#39;: {&#39;sklearn.preprocessing.StandardScaler&#39;: {&#39;with_mean&#39;: False},</span>
+<span class="go">  &#39;sklearn.ensemble.RandomForestClassifier&#39;: {&#39;n_estimators&#39;: 100}},</span>
+<span class="go"> &#39;input_names&#39;: {},</span>
+<span class="go"> &#39;output_names&#39;: {},</span>
+<span class="go"> &#39;hyperparameters&#39;: {&#39;sklearn.preprocessing.StandardScaler#1&#39;: {&#39;with_mean&#39;: False,</span>
+<span class="go">   &#39;with_std&#39;: True},</span>
+<span class="go">  &#39;sklearn.ensemble.RandomForestClassifier#1&#39;: {&#39;n_jobs&#39;: None,</span>
+<span class="go">   &#39;verbose&#39;: 0,</span>
+<span class="go">   &#39;warm_start&#39;: False,</span>
+<span class="go">   &#39;class_weight&#39;: None,</span>
+<span class="go">   &#39;n_estimators&#39;: 100,</span>
+<span class="go">   &#39;criterion&#39;: &#39;gini&#39;,</span>
+<span class="go">   &#39;max_features&#39;: None,</span>
+<span class="go">   &#39;max_depth&#39;: None,</span>
+<span class="go">   &#39;min_samples_split&#39;: 2,</span>
+<span class="go">   &#39;min_samples_leaf&#39;: 1,</span>
+<span class="go">   &#39;min_weight_fraction_leaf&#39;: 0.0,</span>
+<span class="go">   &#39;max_leaf_nodes&#39;: None,</span>
+<span class="go">   &#39;min_impurity_decrease&#39;: 0.0,</span>
+<span class="go">   &#39;bootstrap&#39;: True,</span>
+<span class="go">   &#39;oob_score&#39;: False}},</span>
+<span class="go"> &#39;tunable_hyperparameters&#39;: {&#39;sklearn.preprocessing.StandardScaler#1&#39;: {&#39;with_std&#39;: {&#39;type&#39;: &#39;bool&#39;,</span>
+<span class="go">    &#39;default&#39;: True}},</span>
+<span class="go">  &#39;sklearn.ensemble.RandomForestClassifier#1&#39;: {&#39;criterion&#39;: {&#39;type&#39;: &#39;str&#39;,</span>
+<span class="go">    &#39;default&#39;: &#39;gini&#39;,</span>
+<span class="go">    &#39;values&#39;: [&#39;entropy&#39;, &#39;gini&#39;]},</span>
+<span class="go">   &#39;max_features&#39;: {&#39;type&#39;: &#39;str&#39;,</span>
+<span class="go">    &#39;default&#39;: None,</span>
+<span class="go">    &#39;values&#39;: [None, &#39;auto&#39;, &#39;log2&#39;, &#39;sqrt&#39;]},</span>
+<span class="go">   &#39;max_depth&#39;: {&#39;type&#39;: &#39;int&#39;, &#39;default&#39;: None, &#39;range&#39;: [1, 30]},</span>
+<span class="go">   &#39;min_samples_split&#39;: {&#39;type&#39;: &#39;int&#39;, &#39;default&#39;: 2, &#39;range&#39;: [2, 100]},</span>
+<span class="go">   &#39;min_samples_leaf&#39;: {&#39;type&#39;: &#39;int&#39;, &#39;default&#39;: 1, &#39;range&#39;: [1, 100]},</span>
+<span class="go">   &#39;min_weight_fraction_leaf&#39;: {&#39;type&#39;: &#39;float&#39;,</span>
+<span class="go">    &#39;default&#39;: 0.0,</span>
+<span class="go">    &#39;range&#39;: [0.0, 0.5]},</span>
+<span class="go">   &#39;max_leaf_nodes&#39;: {&#39;type&#39;: &#39;int&#39;, &#39;default&#39;: None, &#39;range&#39;: [2, 1000]},</span>
+<span class="go">   &#39;min_impurity_decrease&#39;: {&#39;type&#39;: &#39;float&#39;,</span>
+<span class="go">    &#39;default&#39;: 0.0,</span>
+<span class="go">    &#39;range&#39;: [0.0, 1000.0]},</span>
+<span class="go">   &#39;bootstrap&#39;: {&#39;type&#39;: &#39;bool&#39;, &#39;default&#39;: True},</span>
+<span class="go">   &#39;oob_score&#39;: {&#39;type&#39;: &#39;bool&#39;, &#39;default&#39;: False}}}}</span>
+</pre></div>
+</div>
+<p>Notice how the dict includes all the arguments that used when we created the <code class="docutils literal notranslate"><span class="pre">MLPipeline</span></code>,
+as well as the hyperparameters that the pipeline is currently using and the complete specification
+of the tunable hypeparameters.</p>
+<p>If we want to directly store the dict as a JSON we can do so by calling the <code class="docutils literal notranslate"><span class="pre">save</span></code> method
+with the path of the JSON file to create.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [8]: </span><span class="n">pipeline</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s1">&#39;pipeline.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="loading-a-pipeline-from-a-dict">
+<h3>Loading a Pipeline from a dict<a class="headerlink" href="#loading-a-pipeline-from-a-dict" title="Permalink to this headline">¶</a></h3>
+<p>Similarly, once the we have a dict specification, we can load the Pipeline directly from it
+by calling the <code class="docutils literal notranslate"><span class="pre">MLPipeline.from_dict</span></code> method.</p>
+<p>Bear in mind that the hyperparameter values and tunable ranges will be taken from the dict.
+This means that if we want to tweak the tunable hyperparameters to adjust it to a specific
+problem or dataset, we can do that directly on our dict representation.</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [9]: </span><span class="n">pipeline_dict</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">   ...: </span>    <span class="s2">&quot;primitives&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="gp">   ...: </span>        <span class="s2">&quot;sklearn.preprocessing.StandardScaler&quot;</span><span class="p">,</span>
+<span class="gp">   ...: </span>        <span class="s2">&quot;sklearn.ensemble.RandomForestClassifier&quot;</span>
+<span class="gp">   ...: </span>    <span class="p">],</span>
+<span class="gp">   ...: </span>    <span class="s2">&quot;hyperparameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ...: </span>        <span class="s2">&quot;sklearn.ensemble.RandomForestClassifier#1&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ...: </span>            <span class="s2">&quot;n_jobs&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">   ...: </span>            <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+<span class="gp">   ...: </span>            <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+<span class="gp">   ...: </span>        <span class="p">}</span>
+<span class="gp">   ...: </span>    <span class="p">},</span>
+<span class="gp">   ...: </span>    <span class="s2">&quot;tunable_hyperparameters&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ...: </span>        <span class="s2">&quot;sklearn.ensemble.RandomForestClassifier#1&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ...: </span>            <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">   ...: </span>                <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+<span class="gp">   ...: </span>                <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">   ...: </span>                <span class="s2">&quot;range&quot;</span><span class="p">:</span> <span class="p">[</span>
+<span class="gp">   ...: </span>                    <span class="mi">1</span><span class="p">,</span>
+<span class="gp">   ...: </span>                    <span class="mi">30</span>
+<span class="gp">   ...: </span>                <span class="p">]</span>
+<span class="gp">   ...: </span>            <span class="p">}</span>
+<span class="gp">   ...: </span>        <span class="p">}</span>
+<span class="gp">   ...: </span>    <span class="p">}</span>
+<span class="gp">   ...: </span><span class="p">}</span>
+<span class="gp">   ...: </span>
+
+<span class="gp">In [10]: </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">pipeline_dict</span><span class="p">)</span>
+
+<span class="gp">In [11]: </span><span class="n">pipeline</span><span class="o">.</span><span class="n">get_hyperparameters</span><span class="p">()</span>
+<span class="gh">Out[11]: </span><span class="go"></span>
+<span class="go">{&#39;sklearn.preprocessing.StandardScaler#1&#39;: {&#39;with_mean&#39;: True,</span>
+<span class="go">  &#39;with_std&#39;: True},</span>
+<span class="go"> &#39;sklearn.ensemble.RandomForestClassifier#1&#39;: {&#39;n_jobs&#39;: -1,</span>
+<span class="go">  &#39;verbose&#39;: 0,</span>
+<span class="go">  &#39;warm_start&#39;: False,</span>
+<span class="go">  &#39;class_weight&#39;: None,</span>
+<span class="go">  &#39;n_estimators&#39;: 100,</span>
+<span class="go">  &#39;criterion&#39;: &#39;gini&#39;,</span>
+<span class="go">  &#39;max_features&#39;: None,</span>
+<span class="go">  &#39;max_depth&#39;: 5,</span>
+<span class="go">  &#39;min_samples_split&#39;: 2,</span>
+<span class="go">  &#39;min_samples_leaf&#39;: 1,</span>
+<span class="go">  &#39;min_weight_fraction_leaf&#39;: 0.0,</span>
+<span class="go">  &#39;max_leaf_nodes&#39;: None,</span>
+<span class="go">  &#39;min_impurity_decrease&#39;: 0.0,</span>
+<span class="go">  &#39;bootstrap&#39;: True,</span>
+<span class="go">  &#39;oob_score&#39;: False}}</span>
+
+<span class="gp">In [12]: </span><span class="n">pipeline</span><span class="o">.</span><span class="n">get_tunable_hyperparameters</span><span class="p">()</span>
+<span class="go">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              Out[12]: </span>
+<span class="go">{&#39;sklearn.ensemble.RandomForestClassifier#1&#39;: {&#39;max_depth&#39;: {&#39;type&#39;: &#39;int&#39;,</span>
+<span class="go">   &#39;default&#39;: 10,</span>
+<span class="go">   &#39;range&#39;: [1, 30]}}}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Notice how we skipped many items in this last dict representation and only included
+the parts that we want to be different than the default values. MLBlocks will figure out
+the rest of the elements directly from the primitive annotations on its own!</p>
+</div>
+<p>Like with the <code class="docutils literal notranslate"><span class="pre">save</span></code> method, the <strong>MLPipeline</strong> class offers a convenience <code class="docutils literal notranslate"><span class="pre">load</span></code> method
+that allows loading the pipeline directly from a JSON file:</p>
+<div class="highlight-ipython notranslate"><div class="highlight"><pre><span></span><span class="gp">In [13]: </span><span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;pipeline.json&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -488,7 +644,7 @@ do its job:</p>
         <a href="adding_primitives.html" class="btn btn-neutral float-right" title="Adding Primitives" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="hyperparameters.html" class="btn btn-neutral" title="Hyperparameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="hyperparameters.html" class="btn btn-neutral float-left" title="Hyperparameters" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -514,26 +670,16 @@ do its job:</p>
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Text Pipelines &mdash; MLBlocks 0.3.1-dev documentation</title>
+  <title>Single Table Pipelines &mdash; MLBlocks 0.3.1-dev documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Image Pipelines" href="image.html" />
-    <link rel="prev" title="Multi Table Pipelines" href="multi_table.html" /> 
+    <link rel="next" title="Multi Table Pipelines" href="multi_table.html" />
+    <link rel="prev" title="Adding Primitives" href="../advanced_usage/adding_primitives.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -139,22 +139,22 @@
 </ul>
 <p class="caption"><span class="caption-text">Pipeline Examples</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="single_table.html">Single Table Pipelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="single_table.html#regression-pipeline">Regression Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="single_table.html#classification-pipeline">Classification Pipeline</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Single Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#regression-pipeline">Regression Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#classification-pipeline">Classification Pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="multi_table.html">Multi Table Pipelines</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="multi_table.html#multi-table-classification-pipeline">Multi Table Classification Pipeline</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Text Pipelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#text-classification">Text Classification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mlprimitives-keras-preprocessing-keras-lstm">MLPrimitives + Keras Preprocessing + Keras LSTM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Text Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="text.html#text-classification">Text Classification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="text.html#mlprimitives-keras-preprocessing-keras-lstm">MLPrimitives + Keras Preprocessing + Keras LSTM</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#tabular-data-with-text">Tabular Data with Text</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#mlprimitives-scikit-learn-randomforestclassifier">MLPrimitives + Scikit-learn RandomForestClassifier</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html#tabular-data-with-text">Tabular Data with Text</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="text.html#mlprimitives-scikit-learn-randomforestclassifier">MLPrimitives + Scikit-learn RandomForestClassifier</a></li>
 </ul>
 </li>
 </ul>
@@ -235,14 +235,14 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>Text Pipelines</li>
+      <li>Single Table Pipelines</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/HDI-Project/MLBlocks/blob/master/docs/pipeline_examples/text.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/HDI-Project/MLBlocks/blob/master/docs/pipeline_examples/single_table.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -256,73 +256,35 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="text-pipelines">
-<h1>Text Pipelines<a class="headerlink" href="#text-pipelines" title="Permalink to this headline">¶</a></h1>
-<p>Here we will be showing some examples using <strong>MLBlocks</strong> to resolve text problems.</p>
-<div class="section" id="text-classification">
-<h2>Text Classification<a class="headerlink" href="#text-classification" title="Permalink to this headline">¶</a></h2>
-<p>For the text classification examples we will be using the <a class="reference external" href="http://scikit-learn.org/stable/datasets/twenty_newsgroups.html">Twenty Newsgroups Dataset</a>,
-which we will load using the <code class="docutils literal notranslate"><span class="pre">mlblocks.dataset.load_newsgroups</span></code> function.</p>
-<p>The data of this dataset is a 1d numpy array vector containing the texts from 11314 newsgroups
-posts, and the target is a 1d numpy integer array containing the label of one of the 20 topics
-that they are about.</p>
-<div class="section" id="mlprimitives-keras-preprocessing-keras-lstm">
-<h3>MLPrimitives + Keras Preprocessing + Keras LSTM<a class="headerlink" href="#mlprimitives-keras-preprocessing-keras-lstm" title="Permalink to this headline">¶</a></h3>
-<p>In this example we will start by applying some text cleanup using the <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives/blob/master/mlprimitives/text.py">TextCleaner primitive</a>
-from MLPrimitives, to then go into some <cite>keras preprocessing</cite> primitives and end
-using a <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives/blob/master/mlblocks_primitives/keras.Sequential.LSTMTextClassifier.json">Keras LSTM Classifier from MLPrimitives</a></p>
-<p>Note how in this case we are using the <code class="docutils literal notranslate"><span class="pre">input_names</span></code> and <code class="docutils literal notranslate"><span class="pre">output_names</span></code> to properly
-setup the pipeline and allow using the outputs from some primitives as additional inputs
-for later ones.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">mlblocks</span> <span class="kn">import</span> <span class="n">MLPipeline</span>
-<span class="kn">from</span> <span class="nn">mlblocks.datasets</span> <span class="kn">import</span> <span class="n">load_newsgroups</span>
+  <div class="section" id="single-table-pipelines">
+<h1>Single Table Pipelines<a class="headerlink" href="#single-table-pipelines" title="Permalink to this headline">¶</a></h1>
+<p>In this section we will go over a few pipeline examples to show <strong>MLBlocks</strong> working
+in different scenarios and with different types of data.</p>
+<p>For each example, we will be using example datasets which can be downloaded using the
+various functions found in the <code class="docutils literal notranslate"><span class="pre">mlblocks.datasets</span></code> module.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Even though the datasets are not especially big, some of the examples might
+use a considerable amount of resources, especially memory, and might take
+several minutes to run.</p>
+</div>
+<div class="section" id="regression-pipeline">
+<h2>Regression Pipeline<a class="headerlink" href="#regression-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>In the most simple example, we will be using a single <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html">RandomForestRegressor</a> primitive over
+the numeric data from <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_boston.html">The Boston Dataset</a>, which we will load using the
+<code class="docutils literal notranslate"><span class="pre">mlblocks.dataset.load_boston</span></code> function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlblocks</span> <span class="kn">import</span> <span class="n">MLPipeline</span>
+<span class="kn">from</span> <span class="nn">mlblocks.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_newsgroups</span><span class="p">()</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span>
 <span class="n">dataset</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_splits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Make sure that we have the necessary data</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
-
-<span class="c1"># set up the pipeline</span>
 <span class="n">primitives</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;mlprimitives.custom.counters.UniqueCounter&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mlprimitives.custom.text.TextCleaner&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;mlprimitives.custom.counters.VocabularyCounter&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;keras.preprocessing.text.Tokenizer&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;keras.preprocessing.sequence.pad_sequences&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;keras.Sequential.LSTMTextClassifier&quot;</span>
+    <span class="s1">&#39;sklearn.ensemble.RandomForestRegressor&#39;</span>
 <span class="p">]</span>
-<span class="n">input_names</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;mlprimitives.custom.counters.UniqueCounter#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;X&quot;</span><span class="p">:</span> <span class="s2">&quot;y&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">output_names</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;mlprimitives.custom.counters.UniqueCounter#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="s2">&quot;classes&quot;</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;mlprimitives.custom.counters.VocabularyCounter#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;counts&quot;</span><span class="p">:</span> <span class="s2">&quot;vocabulary_size&quot;</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">init_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;mlprimitives.custom.counters.VocabularyCounter#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;add&quot;</span><span class="p">:</span> <span class="mi">1</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;mlprimitives.custom.text.TextCleaner#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;en&quot;</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;keras.preprocessing.sequence.pad_sequences#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;maxlen&quot;</span><span class="p">:</span> <span class="mi">100</span>
-    <span class="p">},</span>
-    <span class="s2">&quot;keras.Sequential.LSTMTextClassifier#1&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;input_length&quot;</span><span class="p">:</span> <span class="mi">100</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="p">(</span><span class="n">primitives</span><span class="p">,</span> <span class="n">init_params</span><span class="p">,</span> <span class="n">input_names</span><span class="p">,</span> <span class="n">output_names</span><span class="p">)</span>
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="p">(</span><span class="n">primitives</span><span class="p">)</span>
 
 <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
@@ -332,45 +294,27 @@ for later ones.</p>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="section" id="tabular-data-with-text">
-<h2>Tabular Data with Text<a class="headerlink" href="#tabular-data-with-text" title="Permalink to this headline">¶</a></h2>
-<p>For these examples examples we will be using the <a class="reference external" href="https://www.clips.uantwerpen.be/datasets/personae-corpus">Personae Dataset</a>, which we will load
-using the <code class="docutils literal notranslate"><span class="pre">mlblocks.dataset.load_personae</span></code> function.</p>
-<p>The data of this dataset is a 2d numpy array vector containing 145 entries that include
-texts written by Dutch users in Twitter, with some additional information about the author,
-and the target is a 1d numpy binary integer array indicating whether the author was extrovert
-or not.</p>
-<div class="section" id="mlprimitives-scikit-learn-randomforestclassifier">
-<h3>MLPrimitives + Scikit-learn RandomForestClassifier<a class="headerlink" href="#mlprimitives-scikit-learn-randomforestclassifier" title="Permalink to this headline">¶</a></h3>
-<p>In this example use again the <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives/blob/master/mlprimitives/text.py">TextCleaner primitive</a>, then use a <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives/blob/master/mlprimitives/feature_extraction.py">StringVectorizer primitive</a>,
-to encode all the string features, and go directly into the
-<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html">RandomForestClassifier from scikit-learn</a>.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
-<span class="kn">from</span> <span class="nn">mlblocks</span> <span class="kn">import</span> <span class="n">MLPipeline</span>
-<span class="kn">from</span> <span class="nn">mlblocks.datasets</span> <span class="kn">import</span> <span class="n">load_personae</span>
+<div class="section" id="classification-pipeline">
+<h2>Classification Pipeline<a class="headerlink" href="#classification-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>As a Classification example, we will be using <a class="reference external" href="https://en.wikipedia.org/wiki/Iris_flower_data_set">The Iris Dataset</a>, which we will load using the
+<code class="docutils literal notranslate"><span class="pre">mlblocks.dataset.load_iris</span></code> function.</p>
+<p>Here we will combine the <a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.StandardScaler.html">StandardScaler from scikit-learn</a> with an <a class="reference external" href="https://xgboost.readthedocs.io/en/latest/python/python_api.html#module-xgboost.sklearn">XGBClassifier primitive</a>.</p>
+<p>In this case, we will also be passing some initialization parameters for the XGBClassifier.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mlblocks</span> <span class="kn">import</span> <span class="n">MLPipeline</span>
+<span class="kn">from</span> <span class="nn">mlblocks.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
 
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_personae</span><span class="p">()</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
 <span class="n">dataset</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
 
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_splits</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># Make sure that we have the necessary data</span>
-<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;stopwords&#39;</span><span class="p">)</span>
-
 <span class="n">primitives</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s1">&#39;mlprimitives.custom.text.TextCleaner&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;mlprimitives.custom.feature_extraction.StringVectorizer&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;sklearn.ensemble.RandomForestClassifier&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sklearn.preprocessing.StandardScaler&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;xgboost.XGBClassifier&#39;</span>
 <span class="p">]</span>
 <span class="n">init_params</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;mlprimitives.custom.text.TextCleaner&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;column&#39;</span><span class="p">:</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;language&#39;</span><span class="p">:</span> <span class="s1">&#39;nl&#39;</span>
-    <span class="p">},</span>
-    <span class="s1">&#39;sklearn.ensemble.RandomForestClassifier&#39;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
-        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="mi">100</span>
+    <span class="s1">&#39;xgboost.XGBClassifier&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.1</span>
     <span class="p">}</span>
 <span class="p">}</span>
 <span class="n">pipeline</span> <span class="o">=</span> <span class="n">MLPipeline</span><span class="p">(</span><span class="n">primitives</span><span class="p">,</span> <span class="n">init_params</span><span class="p">)</span>
@@ -384,7 +328,6 @@ to encode all the string features, and go directly into the
 </div>
 </div>
 </div>
-</div>
 
 
            </div>
@@ -394,10 +337,10 @@ to encode all the string features, and go directly into the
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="image.html" class="btn btn-neutral float-right" title="Image Pipelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="multi_table.html" class="btn btn-neutral float-right" title="Multi Table Pipelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="multi_table.html" class="btn btn-neutral float-left" title="Multi Table Pipelines" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../advanced_usage/adding_primitives.html" class="btn btn-neutral float-left" title="Adding Primitives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

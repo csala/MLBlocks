@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Credits &mdash; MLBlocks 0.2.4-dev documentation</title>
+  <title>Credits &mdash; MLBlocks 0.3.1-dev documentation</title>
   
 
   
@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
@@ -33,21 +40,16 @@
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Changelog" href="changelog.html" />
     <link rel="prev" title="Contributing" href="contributing.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -119,6 +121,11 @@
 <li class="toctree-l3"><a class="reference internal" href="advanced_usage/pipelines.html#context-usage-examples">Context Usage Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_usage/pipelines.html#json-annotations">JSON Annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="advanced_usage/pipelines.html#representing-a-pipeline-as-a-dict">Representing a  Pipeline as a dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="advanced_usage/pipelines.html#loading-a-pipeline-from-a-dict">Loading a Pipeline from a dict</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="advanced_usage/adding_primitives.html">Adding Primitives</a><ul>
@@ -126,14 +133,19 @@
 <li class="toctree-l2"><a class="reference internal" href="advanced_usage/adding_primitives.html#writing-primitives">Writing Primitives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="advanced_usage/adding_primitives.html#primitives-lookup">Primitives Lookup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="advanced_usage/adding_primitives.html#adding-a-primitives-folder">Adding a Primitives Folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_usage/adding_primitives.html#developing-a-primitives-library">Developing a Primitives Library</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Pipeline Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/tabular.html">Tabular Pipelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/tabular.html#regression-pipeline">Regression Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/tabular.html#classification-pipeline">Classification Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/single_table.html">Single Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/single_table.html#regression-pipeline">Regression Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/single_table.html#classification-pipeline">Classification Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline_examples/multi_table.html">Multi Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pipeline_examples/multi_table.html#multi-table-classification-pipeline">Multi Table Classification Pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline_examples/text.html">Text Pipelines</a><ul>
@@ -171,6 +183,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/mlblocks.html">mlblocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api/mlblocks.datasets.html">mlblocks.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api/mlblocks.discovery.html">mlblocks.discovery</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Resources</span></p>
 <ul class="current">
@@ -248,11 +261,11 @@
 <div class="section" id="contributors">
 <h2>Contributors<a class="headerlink" href="#contributors" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Carles Sala &lt;<a class="reference external" href="mailto:csala&#37;&#52;&#48;csail&#46;mit&#46;edu">csala<span>&#64;</span>csail<span>&#46;</span>mit<span>&#46;</span>edu</a>&gt;</li>
-<li>Kalyan Veeramachaneni &lt;<a class="reference external" href="mailto:kalyan&#37;&#52;&#48;csail&#46;mit&#46;edu">kalyan<span>&#64;</span>csail<span>&#46;</span>mit<span>&#46;</span>edu</a>&gt;</li>
-<li>William Xue &lt;<a class="reference external" href="mailto:wgxue&#37;&#52;&#48;mit&#46;edu">wgxue<span>&#64;</span>mit<span>&#46;</span>edu</a>&gt;</li>
-<li>Akshay Ravikumar &lt;<a class="reference external" href="mailto:akshayr&#37;&#52;&#48;mit&#46;edu">akshayr<span>&#64;</span>mit<span>&#46;</span>edu</a>&gt;</li>
-<li>Laura Gustafson &lt;<a class="reference external" href="mailto:lgustaf&#37;&#52;&#48;mit&#46;edu">lgustaf<span>&#64;</span>mit<span>&#46;</span>edu</a>&gt;</li>
+<li><p>Carles Sala &lt;<a class="reference external" href="mailto:csala&#37;&#52;&#48;csail&#46;mit&#46;edu">csala<span>&#64;</span>csail<span>&#46;</span>mit<span>&#46;</span>edu</a>&gt;</p></li>
+<li><p>Kalyan Veeramachaneni &lt;<a class="reference external" href="mailto:kalyan&#37;&#52;&#48;csail&#46;mit&#46;edu">kalyan<span>&#64;</span>csail<span>&#46;</span>mit<span>&#46;</span>edu</a>&gt;</p></li>
+<li><p>William Xue &lt;<a class="reference external" href="mailto:wgxue&#37;&#52;&#48;mit&#46;edu">wgxue<span>&#64;</span>mit<span>&#46;</span>edu</a>&gt;</p></li>
+<li><p>Akshay Ravikumar &lt;<a class="reference external" href="mailto:akshayr&#37;&#52;&#48;mit&#46;edu">akshayr<span>&#64;</span>mit<span>&#46;</span>edu</a>&gt;</p></li>
+<li><p>Laura Gustafson &lt;<a class="reference external" href="mailto:lgustaf&#37;&#52;&#48;mit&#46;edu">lgustaf<span>&#64;</span>mit<span>&#46;</span>edu</a>&gt;</p></li>
 </ul>
 </div>
 </div>
@@ -268,7 +281,7 @@
         <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="contributing.html" class="btn btn-neutral" title="Contributing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-left" title="Contributing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -294,26 +307,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hyperparameters &mdash; MLBlocks 0.2.4-dev documentation</title>
+  <title>Hyperparameters &mdash; MLBlocks 0.3.1-dev documentation</title>
   
 
   
@@ -19,13 +19,20 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
@@ -33,21 +40,16 @@
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Pipelines" href="pipelines.html" />
     <link rel="prev" title="Primitives" href="primitives.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -119,6 +121,11 @@
 <li class="toctree-l3"><a class="reference internal" href="pipelines.html#context-usage-examples">Context Usage Examples</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="pipelines.html#json-annotations">JSON Annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pipelines.html#representing-a-pipeline-as-a-dict">Representing a  Pipeline as a dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pipelines.html#loading-a-pipeline-from-a-dict">Loading a Pipeline from a dict</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="adding_primitives.html">Adding Primitives</a><ul>
@@ -126,14 +133,19 @@
 <li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#writing-primitives">Writing Primitives</a></li>
 <li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#primitives-lookup">Primitives Lookup</a></li>
 <li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#adding-a-primitives-folder">Adding a Primitives Folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="adding_primitives.html#developing-a-primitives-library">Developing a Primitives Library</a></li>
 </ul>
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Pipeline Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/tabular.html">Tabular Pipelines</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/tabular.html#regression-pipeline">Regression Pipeline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/tabular.html#classification-pipeline">Classification Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/single_table.html">Single Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/single_table.html#regression-pipeline">Regression Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/single_table.html#classification-pipeline">Classification Pipeline</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/multi_table.html">Multi Table Pipelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline_examples/multi_table.html#multi-table-classification-pipeline">Multi Table Classification Pipeline</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pipeline_examples/text.html">Text Pipelines</a><ul>
@@ -171,6 +183,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../api/mlblocks.html">mlblocks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api/mlblocks.datasets.html">mlblocks.datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api/mlblocks.discovery.html">mlblocks.discovery</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Resources</span></p>
 <ul>
@@ -314,11 +327,11 @@ name as the keyword and a nested JSON that specifies its details:</p>
 </div>
 <p>Each entry in the <code class="docutils literal notranslate"><span class="pre">fixed</span></code> hyperparameters contains:</p>
 <ul class="simple">
-<li><strong>default</strong>: This indicates the default value that the argument will take if the user does
+<li><p><strong>default</strong>: This indicates the default value that the argument will take if the user does
 not specify another value when the <a class="reference external" href="../api_reference.html#mlblocks.MLPipeline">MLPipeline</a> is created. This keyword is optional, and
-if it is not specified, the user expected to always provide a value.</li>
-<li><strong>type</strong>: The type of the argument. This is only informative and is not used by MLBlocks, but
-it is always included in all the <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives">MLPrimitives</a> annotations.</li>
+if it is not specified, the user expected to always provide a value.</p></li>
+<li><p><strong>type</strong>: The type of the argument. This is only informative and is not used by MLBlocks, but
+it is always included in all the <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives">MLPrimitives</a> annotations.</p></li>
 </ul>
 </div>
 <div class="section" id="tunable-hyperparameters">
@@ -347,14 +360,14 @@ name as the keyword and a nested JSON that specifies its details:</p>
 </div>
 <p>Each entry in the <code class="docutils literal notranslate"><span class="pre">tunable</span></code> hyperparameters contains:</p>
 <ul class="simple">
-<li><strong>type</strong>: The type of the argument. This can be one of the primitive variable types, <code class="docutils literal notranslate"><span class="pre">int</span></code>,
-<code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">bool</span></code>, or one of the special types, <a class="reference external" href="#multitype-hyperparameters">multitype</a> or <a class="reference external" href="#conditional-hyperparameters">conditional</a>.</li>
-<li><strong>default</strong>: This indicates the default value that the argument will take if the user does
-not specify another value when the <a class="reference external" href="../api_reference.html#mlblocks.MLPipeline">MLPipeline</a> is created.</li>
-<li><strong>range</strong>: Optional - This is expected to be found in numeric hyperparameters, and specifies
-the minimum and maximum values that this primitive will work well with.</li>
-<li><strong>values</strong>: Optional - this is expected to be found in categorical hyperparameters, and
-indicates the list of possible values that it can work with.</li>
+<li><p><strong>type</strong>: The type of the argument. This can be one of the primitive variable types, <code class="docutils literal notranslate"><span class="pre">int</span></code>,
+<code class="docutils literal notranslate"><span class="pre">float</span></code>, <code class="docutils literal notranslate"><span class="pre">str</span></code> or <code class="docutils literal notranslate"><span class="pre">bool</span></code>, or one of the special types, <a class="reference external" href="#multitype-hyperparameters">multitype</a> or <a class="reference external" href="#conditional-hyperparameters">conditional</a>.</p></li>
+<li><p><strong>default</strong>: This indicates the default value that the argument will take if the user does
+not specify another value when the <a class="reference external" href="../api_reference.html#mlblocks.MLPipeline">MLPipeline</a> is created.</p></li>
+<li><p><strong>range</strong>: Optional - This is expected to be found in numeric hyperparameters, and specifies
+the minimum and maximum values that this primitive will work well with.</p></li>
+<li><p><strong>values</strong>: Optional - this is expected to be found in categorical hyperparameters, and
+indicates the list of possible values that it can work with.</p></li>
 </ul>
 <div class="section" id="special-hyperparameter-types">
 <h3>Special Hyperparameter Types<a class="headerlink" href="#special-hyperparameter-types" title="Permalink to this headline">¶</a></h3>
@@ -366,10 +379,10 @@ depend on the value of other hyperparameters.</p>
 <p>For example, suppose a primitive expects a hyperparameter called <cite>max_features</cite> that can take
 one of three types:</p>
 <ul class="simple">
-<li>An integer indicating the absolute number of features to use.</li>
-<li>A float between 0 and 1 indicating the proportion of the maximum possible number of features.</li>
-<li>The strings <code class="docutils literal notranslate"><span class="pre">&quot;min&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;max&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mean&quot;</span></code>, indicating that the number needs to be computed
-by the primitive itself in some way.</li>
+<li><p>An integer indicating the absolute number of features to use.</p></li>
+<li><p>A float between 0 and 1 indicating the proportion of the maximum possible number of features.</p></li>
+<li><p>The strings <code class="docutils literal notranslate"><span class="pre">&quot;min&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;max&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;mean&quot;</span></code>, indicating that the number needs to be computed
+by the primitive itself in some way.</p></li>
 </ul>
 <p>In this case, the <code class="docutils literal notranslate"><span class="pre">type</span></code> of this hyperparameter is <code class="docutils literal notranslate"><span class="pre">multitype</span></code>, and its specification could
 be as follows:</p>
@@ -396,7 +409,20 @@ possible types that this hyperparameter can have.</p>
 <div class="section" id="conditional-hyperparameters">
 <h4>Conditional Hyperparameters<a class="headerlink" href="#conditional-hyperparameters" title="Permalink to this headline">¶</a></h4>
 <p>In some other cases, the values that a hyperparameter can take depend on the value of another
-one.</p>
+one.
+For example, sometimes a primitive has a hyperparameter that specifies a kernel, and depending
+on the kernel used some other hyperparameters may be or not be used, or they might be able
+to take only some specific values.</p>
+<p>In this case, the <code class="docutils literal notranslate"><span class="pre">type</span></code> of the hyperparameter whose values depend on the other is specified
+as <code class="docutils literal notranslate"><span class="pre">conditional</span></code>.
+In this case, two additional entries are required:</p>
+<ul class="simple">
+<li><p>an entry called <code class="docutils literal notranslate"><span class="pre">condition</span></code>, which specifies the name of the other hyperparameter, the value
+of which is evaluated to decide which values this hyperparameter can take.</p></li>
+<li><p>an additional subdictionary called <code class="docutils literal notranslate"><span class="pre">values</span></code>, which relates the  possible values that the
+<cite>condition</cite> hyperparameter can have with the full specifications of the type and values that
+this hyperparameter can take in each case.</p></li>
+</ul>
 <p>Suppose, for example, that the primitive explained in the previous point does not expect
 the <code class="docutils literal notranslate"><span class="pre">mean</span></code>, <code class="docutils literal notranslate"><span class="pre">min</span></code> or <code class="docutils literal notranslate"><span class="pre">max</span></code> strings as values for the <code class="docutils literal notranslate"><span class="pre">max_features</span></code> hyperparameter,
 but as a separated one called <code class="docutils literal notranslate"><span class="pre">max_feature_aggregation</span></code>, which is only used then the
@@ -419,7 +445,7 @@ but as a separated one called <code class="docutils literal notranslate"><span c
 <span class="p">}</span>
 <span class="s2">&quot;max_features_aggregation&quot;</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;conditional&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;mas_features&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;max_features&quot;</span><span class="p">,</span>
     <span class="s2">&quot;default&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
     <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;auto&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -431,6 +457,13 @@ but as a separated one called <code class="docutils literal notranslate"><span c
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Just like a regular hyperparameter, if there is no match the default entry is used.
+In this example, the <code class="docutils literal notranslate"><span class="pre">null</span></code> value indicates that the hyperparameter needs to be
+disabled if there is no match, but instead of it we could add there a full specification
+of type, range and default value as a nested dictionary to be used by default.</p>
 </div>
 </div>
 </div>
@@ -448,7 +481,7 @@ but as a separated one called <code class="docutils literal notranslate"><span c
         <a href="pipelines.html" class="btn btn-neutral float-right" title="Pipelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="primitives.html" class="btn btn-neutral" title="Primitives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="primitives.html" class="btn btn-neutral float-left" title="Primitives" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -474,26 +507,16 @@ but as a separated one called <code class="docutils literal notranslate"><span c
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
