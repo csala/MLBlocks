@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>mlblocks.mlblock &mdash; MLBlocks 0.3.1-dev documentation</title>
+  <title>mlblocks.mlblock &mdash; MLBlocks 0.3.4.dev1 documentation</title>
   
 
   
@@ -120,8 +120,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../advanced_usage/pipelines.html#json-annotations">JSON Annotations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../advanced_usage/pipelines.html#representing-a-pipeline-as-a-dict">Representing a  Pipeline as a dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../advanced_usage/pipelines.html#representing-a-pipeline-as-a-dict">Representing a Pipeline as a dict</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../advanced_usage/pipelines.html#loading-a-pipeline-from-a-dict">Loading a Pipeline from a dict</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../advanced_usage/pipelines.html#intermediate-outputs-and-partial-execution">Intermediate Outputs and Partial Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../advanced_usage/pipelines.html#output">output_</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../advanced_usage/pipelines.html#start">start_</a></li>
 </ul>
 </li>
 </ul>
@@ -257,6 +262,7 @@
 
 <span class="kn">import</span> <span class="nn">importlib</span>
 <span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
 
 <span class="kn">from</span> <span class="nn">mlblocks.discovery</span> <span class="k">import</span> <span class="n">load_primitive</span>
 
@@ -265,8 +271,19 @@
 
 <span class="k">def</span> <span class="nf">import_object</span><span class="p">(</span><span class="n">object_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Import an object from its Fully Qualified Name.&quot;&quot;&quot;</span>
-    <span class="n">package</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="n">object_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">package</span><span class="p">),</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">object_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">parent_name</span><span class="p">,</span> <span class="n">attribute</span> <span class="o">=</span> <span class="n">object_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">parent_name</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="n">grand_parent_name</span><span class="p">,</span> <span class="n">parent_name</span> <span class="o">=</span> <span class="n">parent_name</span><span class="o">.</span><span class="n">rsplit</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">grand_parent</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">grand_parent_name</span><span class="p">)</span>
+            <span class="n">parent</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">grand_parent</span><span class="p">,</span> <span class="n">parent_name</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">object_name</span>
 
 
 <div class="viewcode-block" id="MLBlock"><a class="viewcode-back" href="../../api/mlblocks.html#mlblocks.MLBlock">[docs]</a><span class="k">class</span> <span class="nc">MLBlock</span><span class="p">():</span>
@@ -279,7 +296,9 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        name (str):</span>
-<span class="sd">            Name given to this MLBlock.</span>
+<span class="sd">            Primitive name.</span>
+<span class="sd">        metadata (dict):</span>
+<span class="sd">            Additional information about this primitive</span>
 <span class="sd">        primitive (object):</span>
 <span class="sd">            the actual function or instance which this MLBlock wraps.</span>
 <span class="sd">        fit_args (dict):</span>
@@ -296,8 +315,8 @@
 <span class="sd">            function.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        name (str):</span>
-<span class="sd">            Name given to this MLBlock.</span>
+<span class="sd">        primitive (str or dict):</span>
+<span class="sd">            primitive name or primitive dictionary.</span>
 <span class="sd">        **kwargs:</span>
 <span class="sd">            Any additional arguments that will be used as hyperparameters or passed to the</span>
 <span class="sd">            ``fit`` or ``produce`` methods.</span>
@@ -393,25 +412,27 @@
 
         <span class="k">return</span> <span class="n">tunable</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">primitive</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">primitive</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">primitive</span> <span class="o">=</span> <span class="n">load_primitive</span><span class="p">(</span><span class="n">primitive</span><span class="p">)</span>
 
-        <span class="n">metadata</span> <span class="o">=</span> <span class="n">load_primitive</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span> <span class="o">=</span> <span class="n">primitive</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">primitive</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">primitive</span> <span class="o">=</span> <span class="n">import_object</span><span class="p">(</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;primitive&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">primitive</span> <span class="o">=</span> <span class="n">import_object</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;primitive&#39;</span><span class="p">])</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fit&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fit&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fit_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;args&#39;</span><span class="p">,</span> <span class="p">[])</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fit_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fit</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_produce</span> <span class="o">=</span> <span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;produce&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_produce</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;produce&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">produce_args</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_produce</span><span class="p">[</span><span class="s1">&#39;args&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">produce_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_produce</span><span class="p">[</span><span class="s1">&#39;output&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">produce_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_produce</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_class</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">produce_method</span><span class="p">)</span>
 
-        <span class="n">hyperparameters</span> <span class="o">=</span> <span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
+        <span class="n">hyperparameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;hyperparameters&#39;</span><span class="p">,</span> <span class="nb">dict</span><span class="p">())</span>
         <span class="n">init_params</span><span class="p">,</span> <span class="n">fit_params</span><span class="p">,</span> <span class="n">produce_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_params</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_hyperparameters</span> <span class="o">=</span> <span class="n">init_params</span>
@@ -445,7 +466,7 @@
 <span class="sd">                tuned, their types and, if applicable, the accepted</span>
 <span class="sd">                ranges or values.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tunable</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_tunable</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MLBlock.get_hyperparameters"><a class="viewcode-back" href="../../api/mlblocks.html#mlblocks.MLBlock.get_hyperparameters">[docs]</a>    <span class="k">def</span> <span class="nf">get_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get hyperparameters values that the current MLBlock is using.</span>
@@ -455,7 +476,7 @@
 <span class="sd">                the dictionary containing the hyperparameter values that the</span>
 <span class="sd">                MLBlock is currently using.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hyperparameters</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hyperparameters</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MLBlock.set_hyperparameters"><a class="viewcode-back" href="../../api/mlblocks.html#mlblocks.MLBlock.set_hyperparameters">[docs]</a>    <span class="k">def</span> <span class="nf">set_hyperparameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hyperparameters</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set new hyperparameters.</span>
@@ -474,7 +495,7 @@
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class</span><span class="p">:</span>
             <span class="n">LOGGER</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Creating a new primitive instance for </span><span class="si">%s</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primitive</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">_hyperparameters</span><span class="p">)</span></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">instance</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">primitive</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">get_hyperparameters</span><span class="p">())</span></div>
 
     <span class="k">def</span> <span class="nf">_get_method_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">,</span> <span class="n">method_args</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Prepare the kwargs for the method.</span>
@@ -502,11 +523,9 @@
 
             <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
-
             <span class="k">elif</span> <span class="s1">&#39;default&#39;</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
                 <span class="n">value</span> <span class="o">=</span> <span class="n">arg</span><span class="p">[</span><span class="s1">&#39;default&#39;</span><span class="p">]</span>
-
-            <span class="k">else</span><span class="p">:</span>
+            <span class="k">elif</span> <span class="n">arg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;required&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
                 <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;missing expected argument &#39;</span><span class="si">{}</span><span class="s2">&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
 
             <span class="n">method_kwargs</span><span class="p">[</span><span class="n">keyword</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
@@ -560,7 +579,7 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_class</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">instance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">produce_method</span><span class="p">)(</span><span class="o">**</span><span class="n">produce_kwargs</span><span class="p">)</span>
 
-        <span class="n">produce_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_hyperparameters</span><span class="p">)</span>
+        <span class="n">produce_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_hyperparameters</span><span class="p">())</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">primitive</span><span class="p">(</span><span class="o">**</span><span class="n">produce_kwargs</span><span class="p">)</span></div></div>
 </pre></div>
 
