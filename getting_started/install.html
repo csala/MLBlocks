@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Installation &mdash; MLBlocks 0.3.4.dev1 documentation</title>
+  <title>Installation &mdash; MLBlocks 0.3.5.dev0 documentation</title>
   
 
   
@@ -23,10 +23,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -59,6 +59,13 @@
           
           </a>
 
+          
+            
+            
+              <div class="version">
+                0.3.5.dev0
+              </div>
+            
           
 
           
@@ -272,31 +279,21 @@
 <p>If you don’t have <a class="reference external" href="https://pip.pypa.io">pip</a> installed, this <a class="reference external" href="http://docs.python-guide.org/en/latest/starting/installation/">Python installation guide</a> can guide
 you through the process.</p>
 </div>
-<div class="section" id="from-sources">
-<h2>From sources<a class="headerlink" href="#from-sources" title="Permalink to this headline">¶</a></h2>
-<p>The sources for MLBlocks can be downloaded from the <a class="reference external" href="https://github.com/HDI-Project/MLBlocks">Github repo</a>.</p>
-<p>You can either clone the public repository:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">git clone git://github.com/HDI-Project/MLBlocks</span>
-</pre></div>
-</div>
-<p>Or download the <a class="reference external" href="https://github.com/HDI-Project/MLBlocks/tarball/master">tarball</a>:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">curl  -OL https://github.com/HDI-Project/MLBlocks/tarball/master</span>
-</pre></div>
-</div>
-<p>Once you have a copy of the source, you can install it running the next command inside the
-project folder:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> make install
+<div class="section" id="additional-dependencies">
+<h2>Additional dependencies<a class="headerlink" href="#additional-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>In order to be usable, MLBlocks requires a compatible primitives library.</p>
+<p>The official library, required in order to follow the MLBlocks tutorials and documentation examples,
+is <a class="reference external" href="https://github.com/HDI-Project/MLPrimitives">MLPrimitives</a>, which you can install with this command:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">pip install mlprimitives</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="development">
-<h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="install-for-development">
+<h2>Install for development<a class="headerlink" href="#install-for-development" title="Permalink to this headline">¶</a></h2>
 <p>If you are installing <strong>MLBlocks</strong> in order to modify its code, the installation must be done
 from its sources, in the editable mode, and also including some additional dependencies in
-order to be able to run the tests and build the documentation:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">make install-develop</span>
-</pre></div>
-</div>
+order to be able to run the tests and build the documentation. Instructions about this process
+can be found in the <a class="reference external" href="../contributing.html#get-started">Contributing guide</a>.</p>
 </div>
 </div>
 

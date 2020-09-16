@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>What is MLBlocks? &mdash; MLBlocks 0.3.4.dev1 documentation</title>
+  <title>What is MLBlocks? &mdash; MLBlocks 0.3.5.dev0 documentation</title>
   
 
   
@@ -23,10 +23,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -58,6 +58,13 @@
           
           </a>
 
+          
+            
+            
+              <div class="version">
+                0.3.5.dev0
+              </div>
+            
           
 
           
@@ -263,6 +270,11 @@
   <div class="section" id="what-is-mlblocks">
 <h1>What is MLBlocks?<a class="headerlink" href="#what-is-mlblocks" title="Permalink to this headline">¶</a></h1>
 <a class="reference internal image-reference" href="_images/mlblocks-logo.png"><img alt="MLBlocks" class="align-center" src="_images/mlblocks-logo.png" style="width: 300px;" /></a>
+<ul class="simple">
+<li><p>Free software: <a class="reference external" href="https://github.com/HDI-Project/MLBlocks/blob/master/LICENSE">MIT license</a></p></li>
+<li><p>Documentation: <a class="reference external" href="https://HDI-Project.github.io/MLBlocks">https://HDI-Project.github.io/MLBlocks</a></p></li>
+<li><p>Homepage: <a class="reference external" href="https://github.com/HDI-Project/MLBlocks">https://github.com/HDI-Project/MLBlocks</a></p></li>
+</ul>
 <p>MLBlocks is a simple framework for seamlessly combining any possible set of Machine Learning
 tools developed in Python, whether they are custom developments or belong to third party
 libraries, and build Pipelines out of them that can be fitted and then used to make predictions.</p>
@@ -285,15 +297,29 @@ MLBlock sequentially to obtain the desired predictions.</p></li>
 </ul>
 <div class="section" id="history">
 <h2>History<a class="headerlink" href="#history" title="Permalink to this headline">¶</a></h2>
-<p>In its first iteration in 2015, MLBlocks was designed for only multi table, multi entity temporal
-data. A good reference to see our design rationale at that time is Bryan Collazo’s thesis:</p>
+<p>In its first iteration, in 2015, MLBlocks was designed for only multi table, multi entity temporal
+data. A good reference to see our design rationale at that time is Bryan Collazo’s thesis, written
+under the supervision of Kalyan Veeramachaneni:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/HDI-Project/mlblocks">Machine learning blocks</a>.
+<li><p><a class="reference external" href="https://dai.lids.mit.edu/wp-content/uploads/2018/06/Mlblocks_Bryan.pdf">Machine learning blocks</a>.
 Bryan Collazo. Masters thesis, MIT EECS, 2015.</p></li>
 </ul>
-<p>With recent availability of a multitude of libraries and tools, we decided it was time to integrate
-them and expand the library to address other data types: images, text, graph, time series and
-integrate with deep learning libraries.</p>
+<p>In 2018, with recent availability of a multitude of libraries and tools, we decided it was time to
+integrate them and expand the library to address other data types, like images, text, graph or
+time series, as well as introduce the usage of deep learning libraries. A second iteration of our
+work was then started by the hand of William Xue:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dai.lids.mit.edu/wp-content/uploads/2018/12/William_MEng.pdf">A Flexible Framework for Composing End to End Machine Learning Pipelines</a>.
+William Xue. Masters thesis, MIT EECS, 2018.</p></li>
+</ul>
+<p>Later in 2018, Carles Sala joined the project to make it grow as a reliable open-source library
+that would become part of a bigger software ecosystem designed to facilitate the development of
+robust end-to-end solutions based on Machine Learning tools. This third iteration of our work
+was presented in 2019 as part of the Machine Learning Bazaar:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://arxiv.org/abs/1905.08942">The Machine Learning Bazaar: Harnessing the ML Ecosystem for Effective System Development</a>.
+Micah J. Smith, Carles Sala, James Max Kanter, and Kalyan Veeramachaneni. Sigmod 2020.</p></li>
+</ul>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Getting Started</span></p>
 <ul class="current">
